@@ -1,3 +1,4 @@
 *.slxc
 *.zip
-Asw_DCAC_ert_rtw
+Asw_DCAC_ert_rtw/**
+slprj/**
