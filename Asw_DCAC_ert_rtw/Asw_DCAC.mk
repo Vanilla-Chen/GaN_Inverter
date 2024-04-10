@@ -2,7 +2,7 @@
 ## Makefile generated for component 'Asw_DCAC'. 
 ## 
 ## Makefile     : Asw_DCAC.mk
-## Generated on : Thu Mar 28 15:12:44 2024
+## Generated on : Sun Apr 07 20:00:55 2024
 ## Final product: $(RELATIVE_PATH_TO_ANCHOR)/Asw_DCAC.elf
 ## Product type : executable
 ## 
@@ -27,7 +27,7 @@ START_DIR                 = D:/Desktop/Project/GaN/Matlab/GaN_Inverter
 SOLVER                    = 
 SOLVER_OBJ                = 
 CLASSIC_INTERFACE         = 0
-TGT_FCN_LIB               = ARM Cortex-M
+TGT_FCN_LIB               = ISO_C
 MODEL_HAS_DYNAMICALLY_LOADED_SFCNS = 0
 RELATIVE_PATH_TO_ANCHOR   = ..
 COMPILER_COMMAND_FILE     = Asw_DCAC_comp.rsp
