@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'Asw_DCAC'.
  *
- * Model version                  : 1.67
+ * Model version                  : 1.95
  * Simulink Coder version         : 23.2 (R2023b) 01-Aug-2023
- * C/C++ source code generated on : Sun Apr  7 20:03:04 2024
+ * C/C++ source code generated on : Tue Jun 25 19:08:03 2024
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -41,10 +41,24 @@ void Asw_DCAC_step1(void)              /* Sample time: [1.0E-6s, 0.0s] */
 {
   real_T lastSin_tmp;
   real32_T Integrator;
-  real32_T rtb_I_L_err;
-  real32_T rtb_Saturation;
+  real32_T Integrator_n;
+  real32_T rtb_Gain4;
+  real32_T rtb_Gain7_h;
+  real32_T rtb_Sum3;
+  real32_T rtb_Sum7;
+  real32_T rtb_Top_High_Frequency;
 
-  /* Sin: '<S1>/Sine Wave' */
+  /* Gain: '<S3>/Gain7' incorporates:
+   *  Constant: '<S3>/Constant3'
+   *  DataTypeConversion: '<S3>/Data Type Conversion1'
+   *  Gain: '<S3>/Gain6'
+   *  Inport: '<Root>/BSW_Volt_Load'
+   *  Sum: '<S3>/Add'
+   */
+  rtb_Gain7_h = (0.000805664051F * (real32_T)Asw_DCAC_U.BSW_Volt_Load - 1.65F) *
+    32.3333321F;
+
+  /* Sin: '<S5>/Sine Wave3' */
   if (Asw_DCAC_DW.systemEnable != 0) {
     lastSin_tmp = 6283.1853071795858 * (((Asw_DCAC_M->Timing.clockTick1+
       Asw_DCAC_M->Timing.clockTickH1* 4294967296.0)) * 1.0E-6);
@@ -53,76 +67,106 @@ void Asw_DCAC_step1(void)              /* Sample time: [1.0E-6s, 0.0s] */
     Asw_DCAC_DW.systemEnable = 0;
   }
 
-  /* Sum: '<S1>/I_L_err' incorporates:
-   *  Constant: '<Root>/Constant1'
-   *  DataTypeConversion: '<S1>/Data Type Conversion'
-   *  Inport: '<Root>/I_C'
-   *  Inport: '<Root>/I_L'
-   *  Product: '<S1>/Product'
-   *  Sin: '<S1>/Sine Wave'
-   *  Sum: '<S1>/I_L_SET'
+  /* Sum: '<S5>/Sum3' incorporates:
+   *  Constant: '<Root>/Constant'
+   *  DataTypeConversion: '<S5>/Data Type Conversion2'
+   *  Product: '<S5>/Product'
+   *  Sin: '<S5>/Sine Wave3'
    */
-  rtb_I_L_err = ((real32_T)((Asw_DCAC_DW.lastSin * 0.99998026085613712 +
+  rtb_Sum3 = (real32_T)((Asw_DCAC_DW.lastSin * 0.99998026085613712 +
     Asw_DCAC_DW.lastCos * -0.00628314396555895) * 0.99998026085613712 +
-    (Asw_DCAC_DW.lastCos * 0.99998026085613712 - Asw_DCAC_DW.lastSin *
-     -0.00628314396555895) * 0.00628314396555895) * 10.0F + Asw_DCAC_U.I_C) -
-    Asw_DCAC_U.I_L;
+                        (Asw_DCAC_DW.lastCos * 0.99998026085613712 -
+    Asw_DCAC_DW.lastSin * -0.00628314396555895) * 0.00628314396555895) * 15.0F -
+    rtb_Gain7_h;
 
-  /* DiscreteIntegrator: '<S36>/Integrator' */
-  Integrator = 5.0E-7F * rtb_I_L_err + Asw_DCAC_DW.Integrator_DSTATE;
+  /* DiscreteIntegrator: '<S39>/Integrator' */
+  Integrator = 5.0E-7F * rtb_Sum3 + Asw_DCAC_DW.Integrator_DSTATE;
 
-  /* Gain: '<S1>/Normalization' incorporates:
-   *  Gain: '<S41>/Proportional Gain'
-   *  Inport: '<Root>/U_Load'
-   *  Sum: '<S1>/Sum8'
-   *  Sum: '<S45>/Sum'
+  /* Sum: '<S5>/Sum7' incorporates:
+   *  Constant: '<S1>/Constant3'
+   *  Constant: '<S2>/Constant3'
+   *  DataTypeConversion: '<S1>/Data Type Conversion1'
+   *  DataTypeConversion: '<S2>/Data Type Conversion1'
+   *  Gain: '<S1>/Gain6'
+   *  Gain: '<S1>/Gain7'
+   *  Gain: '<S1>/Gain8'
+   *  Gain: '<S2>/Gain6'
+   *  Gain: '<S2>/Gain7'
+   *  Gain: '<S2>/Gain8'
+   *  Gain: '<S44>/Proportional Gain'
+   *  Inport: '<Root>/BSW_Curr_Induct'
+   *  Inport: '<Root>/BSW_Curr_Load'
+   *  Sum: '<S1>/Add'
+   *  Sum: '<S2>/Add'
+   *  Sum: '<S48>/Sum'
+   *  Sum: '<S5>/Sum6'
    */
-  rtb_Saturation = ((5.0F * rtb_I_L_err + Integrator) + Asw_DCAC_U.U_Load) *
-    0.01F;
+  rtb_Sum7 = ((0.000805664051F * (real32_T)Asw_DCAC_U.BSW_Curr_Load - 1.65F) *
+              0.01F * 66.6666641F + (3.5F * rtb_Sum3 + Integrator)) -
+    (0.000805664051F * (real32_T)Asw_DCAC_U.BSW_Curr_Induct - 1.65F) * 0.01F *
+    66.6666641F;
 
-  /* Saturate: '<S1>/Saturation' */
-  if (rtb_Saturation > 1.0F) {
-    rtb_Saturation = 1.0F;
-  } else if (rtb_Saturation < -1.0F) {
-    rtb_Saturation = -1.0F;
+  /* DiscreteIntegrator: '<S87>/Integrator' */
+  Integrator_n = 5.0E-7F * rtb_Sum7 + Asw_DCAC_DW.Integrator_DSTATE_d;
+
+  /* Gain: '<S5>/Gain2' incorporates:
+   *  Gain: '<S92>/Proportional Gain'
+   *  Sum: '<S5>/Sum8'
+   *  Sum: '<S96>/Sum'
+   */
+  rtb_Gain7_h = ((2.0F * rtb_Sum7 + Integrator_n) + rtb_Gain7_h) * 0.0333333351F;
+
+  /* Saturate: '<S5>/Saturation' */
+  if (rtb_Gain7_h > 1.0F) {
+    rtb_Gain7_h = 1.0F;
+  } else if (rtb_Gain7_h < -1.0F) {
+    rtb_Gain7_h = -1.0F;
   }
 
-  /* End of Saturate: '<S1>/Saturation' */
-
-  /* Outport: '<Root>/Top_High_Frequency' incorporates:
-   *  MATLAB Function: '<Root>/Unipolar fast and slow modulation'
+  /* Gain: '<Root>/Gain4' incorporates:
+   *  Saturate: '<S5>/Saturation'
    */
-  Asw_DCAC_Y.Top_High_Frequency = 0.0F;
-
-  /* Outport: '<Root>/Bottom_High_Frequency' incorporates:
-   *  MATLAB Function: '<Root>/Unipolar fast and slow modulation'
-   */
-  Asw_DCAC_Y.Bottom_High_Frequency = 0.0F;
+  rtb_Gain4 = 2720.0F * rtb_Gain7_h;
 
   /* MATLAB Function: '<Root>/Unipolar fast and slow modulation' */
-  if (rtb_Saturation >= 0.0F) {
-    /* Outport: '<Root>/Top_High_Frequency' */
-    Asw_DCAC_Y.Top_High_Frequency = rtb_Saturation;
+  rtb_Top_High_Frequency = 0.0F;
+  rtb_Gain7_h = 0.0F;
+  if (rtb_Gain4 >= 0.0F) {
+    rtb_Top_High_Frequency = rtb_Gain4;
 
     /* Outport: '<Root>/Low_Frequency' */
     Asw_DCAC_Y.Low_Frequency = 0.0F;
   } else {
-    /* Outport: '<Root>/Bottom_High_Frequency' */
-    Asw_DCAC_Y.Bottom_High_Frequency = -rtb_Saturation;
+    rtb_Gain7_h = -rtb_Gain4;
 
     /* Outport: '<Root>/Low_Frequency' */
     Asw_DCAC_Y.Low_Frequency = 1.0F;
   }
 
-  /* Update for Sin: '<S1>/Sine Wave' */
+  /* End of MATLAB Function: '<Root>/Unipolar fast and slow modulation' */
+
+  /* Outport: '<Root>/Top_High_Frequency' incorporates:
+   *  Gain: '<Root>/Gain2'
+   */
+  Asw_DCAC_Y.Top_High_Frequency = 0.000367647066F * rtb_Top_High_Frequency;
+
+  /* Outport: '<Root>/Bottom_High_Frequency' incorporates:
+   *  Gain: '<Root>/Gain3'
+   */
+  Asw_DCAC_Y.Bottom_High_Frequency = 0.000367647066F * rtb_Gain7_h;
+
+  /* Update for Sin: '<S5>/Sine Wave3' */
   lastSin_tmp = Asw_DCAC_DW.lastSin;
   Asw_DCAC_DW.lastSin = Asw_DCAC_DW.lastSin * 0.99998026085613712 +
     Asw_DCAC_DW.lastCos * 0.00628314396555895;
   Asw_DCAC_DW.lastCos = Asw_DCAC_DW.lastCos * 0.99998026085613712 - lastSin_tmp *
     0.00628314396555895;
 
-  /* Update for DiscreteIntegrator: '<S36>/Integrator' */
-  Asw_DCAC_DW.Integrator_DSTATE = 5.0E-7F * rtb_I_L_err + Integrator;
+  /* Update for DiscreteIntegrator: '<S39>/Integrator' */
+  Asw_DCAC_DW.Integrator_DSTATE = 5.0E-7F * rtb_Sum3 + Integrator;
+
+  /* Update for DiscreteIntegrator: '<S87>/Integrator' */
+  Asw_DCAC_DW.Integrator_DSTATE_d = 5.0E-7F * rtb_Sum7 + Integrator_n;
 
   /* Update absolute time */
   /* The "clockTick1" counts the number of times the code of this task has
@@ -148,7 +192,7 @@ void Asw_DCAC_initialize(void)
   (Asw_DCAC_M)->Timing.TaskCounters.cLimit[0] = 1;
   (Asw_DCAC_M)->Timing.TaskCounters.cLimit[1] = 100;
 
-  /* Enable for Sin: '<S1>/Sine Wave' */
+  /* Enable for Sin: '<S5>/Sine Wave3' */
   Asw_DCAC_DW.systemEnable = 1;
 }
 
