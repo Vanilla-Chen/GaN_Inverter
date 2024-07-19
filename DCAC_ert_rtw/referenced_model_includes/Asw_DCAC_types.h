@@ -3,12 +3,12 @@
  *
  * Code generated for Simulink model 'Asw_DCAC'.
  *
- * Model version                  : 1.105
+ * Model version                  : 1.59
  * Simulink Coder version         : 23.2 (R2023b) 01-Aug-2023
- * C/C++ source code generated on : Fri Jul 19 09:56:30 2024
+ * C/C++ source code generated on : Fri Mar 22 19:45:12 2024
  *
  * Target selection: ert.tlc
- * Embedded hardware selection: ARM Compatible->ARM Cortex-M
+ * Embedded hardware selection: Intel->x86-64 (Windows64)
  * Code generation objectives: Unspecified
  * Validation result: Not run
  */

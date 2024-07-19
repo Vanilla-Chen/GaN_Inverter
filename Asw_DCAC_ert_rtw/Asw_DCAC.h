@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'Asw_DCAC'.
  *
- * Model version                  : 1.95
+ * Model version                  : 1.105
  * Simulink Coder version         : 23.2 (R2023b) 01-Aug-2023
- * C/C++ source code generated on : Tue Jun 25 19:08:03 2024
+ * C/C++ source code generated on : Fri Jul 19 09:56:30 2024
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -47,8 +47,8 @@
 typedef struct {
   real_T lastSin;                      /* '<S5>/Sine Wave3' */
   real_T lastCos;                      /* '<S5>/Sine Wave3' */
-  real32_T Integrator_DSTATE;          /* '<S39>/Integrator' */
-  real32_T Integrator_DSTATE_d;        /* '<S87>/Integrator' */
+  real32_T Integrator_DSTATE;          /* '<S87>/Integrator' */
+  real32_T Integrator_DSTATE_d;        /* '<S39>/Integrator' */
   int32_T systemEnable;                /* '<S5>/Sine Wave3' */
 } DW_Asw_DCAC_T;
 
@@ -80,8 +80,8 @@ struct tag_RTM_Asw_DCAC_T {
     uint32_T clockTick1;
     uint32_T clockTickH1;
     struct {
-      uint8_T TID[2];
-      uint8_T cLimit[2];
+      uint16_T TID[2];
+      uint16_T cLimit[2];
     } TaskCounters;
   } Timing;
 };
@@ -107,9 +107,9 @@ extern RT_MODEL_Asw_DCAC_T *const Asw_DCAC_M;
 /*-
  * These blocks were eliminated from the model due to optimizations:
  *
+ * Block '<Root>/Data Type Conversion' : Unused code path elimination
  * Block '<Root>/Sine Wave5' : Unused code path elimination
- * Block '<S36>/Integral Gain' : Eliminated nontunable gain of 1
- * Block '<S84>/Integral Gain' : Eliminated nontunable gain of 1
+ * Block '<S92>/Proportional Gain' : Eliminated nontunable gain of 1
  */
 
 /*-
@@ -132,104 +132,104 @@ extern RT_MODEL_Asw_DCAC_T *const Asw_DCAC_M;
  * '<S3>'   : 'Asw_DCAC/Subsystem2'
  * '<S4>'   : 'Asw_DCAC/Unipolar fast and slow modulation'
  * '<S5>'   : 'Asw_DCAC/Voltage closed loop'
- * '<S6>'   : 'Asw_DCAC/Voltage closed loop/PID Controller3'
- * '<S7>'   : 'Asw_DCAC/Voltage closed loop/PID Controller4'
- * '<S8>'   : 'Asw_DCAC/Voltage closed loop/PID Controller3/Anti-windup'
- * '<S9>'   : 'Asw_DCAC/Voltage closed loop/PID Controller3/D Gain'
- * '<S10>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Filter'
- * '<S11>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Filter ICs'
- * '<S12>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/I Gain'
- * '<S13>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Ideal P Gain'
- * '<S14>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Ideal P Gain Fdbk'
- * '<S15>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Integrator'
- * '<S16>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Integrator ICs'
- * '<S17>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/N Copy'
- * '<S18>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/N Gain'
- * '<S19>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/P Copy'
- * '<S20>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Parallel P Gain'
- * '<S21>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Reset Signal'
- * '<S22>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Saturation'
- * '<S23>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Saturation Fdbk'
- * '<S24>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Sum'
- * '<S25>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Sum Fdbk'
- * '<S26>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Tracking Mode'
- * '<S27>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Tracking Mode Sum'
- * '<S28>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Tsamp - Integral'
- * '<S29>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Tsamp - Ngain'
- * '<S30>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/postSat Signal'
- * '<S31>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/preSat Signal'
- * '<S32>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Anti-windup/Passthrough'
- * '<S33>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/D Gain/Disabled'
- * '<S34>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Filter/Disabled'
- * '<S35>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Filter ICs/Disabled'
- * '<S36>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/I Gain/Internal Parameters'
- * '<S37>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Ideal P Gain/Passthrough'
- * '<S38>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Ideal P Gain Fdbk/Disabled'
- * '<S39>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Integrator/Discrete'
- * '<S40>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Integrator ICs/Internal IC'
- * '<S41>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/N Copy/Disabled wSignal Specification'
- * '<S42>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/N Gain/Disabled'
- * '<S43>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/P Copy/Disabled'
- * '<S44>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Parallel P Gain/Internal Parameters'
- * '<S45>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Reset Signal/Disabled'
- * '<S46>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Saturation/Passthrough'
- * '<S47>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Saturation Fdbk/Disabled'
- * '<S48>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Sum/Sum_PI'
- * '<S49>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Sum Fdbk/Disabled'
- * '<S50>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Tracking Mode/Disabled'
- * '<S51>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Tracking Mode Sum/Passthrough'
- * '<S52>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Tsamp - Integral/TsSignalSpecification'
- * '<S53>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/Tsamp - Ngain/Passthrough'
- * '<S54>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/postSat Signal/Forward_Path'
- * '<S55>'  : 'Asw_DCAC/Voltage closed loop/PID Controller3/preSat Signal/Forward_Path'
- * '<S56>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Anti-windup'
- * '<S57>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/D Gain'
- * '<S58>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Filter'
- * '<S59>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Filter ICs'
- * '<S60>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/I Gain'
- * '<S61>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Ideal P Gain'
- * '<S62>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Ideal P Gain Fdbk'
- * '<S63>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Integrator'
- * '<S64>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Integrator ICs'
- * '<S65>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/N Copy'
- * '<S66>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/N Gain'
- * '<S67>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/P Copy'
- * '<S68>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Parallel P Gain'
- * '<S69>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Reset Signal'
- * '<S70>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Saturation'
- * '<S71>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Saturation Fdbk'
- * '<S72>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Sum'
- * '<S73>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Sum Fdbk'
- * '<S74>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Tracking Mode'
- * '<S75>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Tracking Mode Sum'
- * '<S76>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Tsamp - Integral'
- * '<S77>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Tsamp - Ngain'
- * '<S78>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/postSat Signal'
- * '<S79>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/preSat Signal'
- * '<S80>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Anti-windup/Passthrough'
- * '<S81>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/D Gain/Disabled'
- * '<S82>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Filter/Disabled'
- * '<S83>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Filter ICs/Disabled'
- * '<S84>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/I Gain/Internal Parameters'
- * '<S85>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Ideal P Gain/Passthrough'
- * '<S86>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Ideal P Gain Fdbk/Disabled'
- * '<S87>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Integrator/Discrete'
- * '<S88>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Integrator ICs/Internal IC'
- * '<S89>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/N Copy/Disabled wSignal Specification'
- * '<S90>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/N Gain/Disabled'
- * '<S91>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/P Copy/Disabled'
- * '<S92>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Parallel P Gain/Internal Parameters'
- * '<S93>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Reset Signal/Disabled'
- * '<S94>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Saturation/Passthrough'
- * '<S95>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Saturation Fdbk/Disabled'
- * '<S96>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Sum/Sum_PI'
- * '<S97>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Sum Fdbk/Disabled'
- * '<S98>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Tracking Mode/Disabled'
- * '<S99>'  : 'Asw_DCAC/Voltage closed loop/PID Controller4/Tracking Mode Sum/Passthrough'
- * '<S100>' : 'Asw_DCAC/Voltage closed loop/PID Controller4/Tsamp - Integral/TsSignalSpecification'
- * '<S101>' : 'Asw_DCAC/Voltage closed loop/PID Controller4/Tsamp - Ngain/Passthrough'
- * '<S102>' : 'Asw_DCAC/Voltage closed loop/PID Controller4/postSat Signal/Forward_Path'
- * '<S103>' : 'Asw_DCAC/Voltage closed loop/PID Controller4/preSat Signal/Forward_Path'
+ * '<S6>'   : 'Asw_DCAC/Voltage closed loop/I_PID_Controller'
+ * '<S7>'   : 'Asw_DCAC/Voltage closed loop/U_PID_Controller'
+ * '<S8>'   : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Anti-windup'
+ * '<S9>'   : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/D Gain'
+ * '<S10>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Filter'
+ * '<S11>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Filter ICs'
+ * '<S12>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/I Gain'
+ * '<S13>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Ideal P Gain'
+ * '<S14>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Ideal P Gain Fdbk'
+ * '<S15>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Integrator'
+ * '<S16>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Integrator ICs'
+ * '<S17>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/N Copy'
+ * '<S18>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/N Gain'
+ * '<S19>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/P Copy'
+ * '<S20>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Parallel P Gain'
+ * '<S21>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Reset Signal'
+ * '<S22>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Saturation'
+ * '<S23>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Saturation Fdbk'
+ * '<S24>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Sum'
+ * '<S25>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Sum Fdbk'
+ * '<S26>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Tracking Mode'
+ * '<S27>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Tracking Mode Sum'
+ * '<S28>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Tsamp - Integral'
+ * '<S29>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Tsamp - Ngain'
+ * '<S30>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/postSat Signal'
+ * '<S31>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/preSat Signal'
+ * '<S32>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Anti-windup/Passthrough'
+ * '<S33>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/D Gain/Disabled'
+ * '<S34>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Filter/Disabled'
+ * '<S35>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Filter ICs/Disabled'
+ * '<S36>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/I Gain/Internal Parameters'
+ * '<S37>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Ideal P Gain/Passthrough'
+ * '<S38>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Ideal P Gain Fdbk/Disabled'
+ * '<S39>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Integrator/Discrete'
+ * '<S40>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Integrator ICs/Internal IC'
+ * '<S41>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/N Copy/Disabled wSignal Specification'
+ * '<S42>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/N Gain/Disabled'
+ * '<S43>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/P Copy/Disabled'
+ * '<S44>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Parallel P Gain/Internal Parameters'
+ * '<S45>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Reset Signal/Disabled'
+ * '<S46>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Saturation/Passthrough'
+ * '<S47>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Saturation Fdbk/Disabled'
+ * '<S48>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Sum/Sum_PI'
+ * '<S49>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Sum Fdbk/Disabled'
+ * '<S50>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Tracking Mode/Disabled'
+ * '<S51>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Tracking Mode Sum/Passthrough'
+ * '<S52>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Tsamp - Integral/TsSignalSpecification'
+ * '<S53>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/Tsamp - Ngain/Passthrough'
+ * '<S54>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/postSat Signal/Forward_Path'
+ * '<S55>'  : 'Asw_DCAC/Voltage closed loop/I_PID_Controller/preSat Signal/Forward_Path'
+ * '<S56>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Anti-windup'
+ * '<S57>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/D Gain'
+ * '<S58>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Filter'
+ * '<S59>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Filter ICs'
+ * '<S60>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/I Gain'
+ * '<S61>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Ideal P Gain'
+ * '<S62>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Ideal P Gain Fdbk'
+ * '<S63>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Integrator'
+ * '<S64>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Integrator ICs'
+ * '<S65>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/N Copy'
+ * '<S66>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/N Gain'
+ * '<S67>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/P Copy'
+ * '<S68>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Parallel P Gain'
+ * '<S69>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Reset Signal'
+ * '<S70>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Saturation'
+ * '<S71>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Saturation Fdbk'
+ * '<S72>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Sum'
+ * '<S73>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Sum Fdbk'
+ * '<S74>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Tracking Mode'
+ * '<S75>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Tracking Mode Sum'
+ * '<S76>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Tsamp - Integral'
+ * '<S77>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Tsamp - Ngain'
+ * '<S78>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/postSat Signal'
+ * '<S79>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/preSat Signal'
+ * '<S80>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Anti-windup/Passthrough'
+ * '<S81>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/D Gain/Disabled'
+ * '<S82>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Filter/Disabled'
+ * '<S83>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Filter ICs/Disabled'
+ * '<S84>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/I Gain/Internal Parameters'
+ * '<S85>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Ideal P Gain/Passthrough'
+ * '<S86>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Ideal P Gain Fdbk/Disabled'
+ * '<S87>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Integrator/Discrete'
+ * '<S88>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Integrator ICs/Internal IC'
+ * '<S89>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/N Copy/Disabled wSignal Specification'
+ * '<S90>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/N Gain/Disabled'
+ * '<S91>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/P Copy/Disabled'
+ * '<S92>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Parallel P Gain/Internal Parameters'
+ * '<S93>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Reset Signal/Disabled'
+ * '<S94>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Saturation/Passthrough'
+ * '<S95>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Saturation Fdbk/Disabled'
+ * '<S96>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Sum/Sum_PI'
+ * '<S97>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Sum Fdbk/Disabled'
+ * '<S98>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Tracking Mode/Disabled'
+ * '<S99>'  : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Tracking Mode Sum/Passthrough'
+ * '<S100>' : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Tsamp - Integral/TsSignalSpecification'
+ * '<S101>' : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/Tsamp - Ngain/Passthrough'
+ * '<S102>' : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/postSat Signal/Forward_Path'
+ * '<S103>' : 'Asw_DCAC/Voltage closed loop/U_PID_Controller/preSat Signal/Forward_Path'
  */
 #endif                                 /* RTW_HEADER_Asw_DCAC_h_ */
 
