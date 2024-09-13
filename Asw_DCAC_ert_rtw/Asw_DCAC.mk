@@ -2,7 +2,7 @@
 ## Makefile generated for component 'Asw_DCAC'. 
 ## 
 ## Makefile     : Asw_DCAC.mk
-## Generated on : Sun Apr 07 20:00:55 2024
+## Generated on : Fri Jul 19 13:35:52 2024
 ## Final product: $(RELATIVE_PATH_TO_ANCHOR)/Asw_DCAC.elf
 ## Product type : executable
 ## 
@@ -211,10 +211,10 @@ INCLUDES = $(INCLUDES_BUILDINFO)
 ## DEFINES
 ###########################################################################
 
-DEFINES_BUILD_ARGS = -DCLASSIC_INTERFACE=0 -DALLOCATIONFCN=0 -DTERMFCN=1 -DONESTEPFCN=1 -DMAT_FILE=0 -DMULTI_INSTANCE_CODE=0 -DINTEGER_CODE=0 -DMT=1
+DEFINES_BUILD_ARGS = -DCLASSIC_INTERFACE=0 -DALLOCATIONFCN=0 -DTERMFCN=1 -DONESTEPFCN=1 -DMAT_FILE=0 -DMULTI_INSTANCE_CODE=0 -DINTEGER_CODE=0 -DMT=0
 DEFINES_CUSTOM = 
 DEFINES_OPTS = -DTID01EQ=0
-DEFINES_STANDARD = -DMODEL=Asw_DCAC -DNUMST=2 -DNCSTATES=0 -DHAVESTDIO -DMODEL_HAS_DYNAMICALLY_LOADED_SFCNS=0
+DEFINES_STANDARD = -DMODEL=Asw_DCAC -DNUMST=1 -DNCSTATES=0 -DHAVESTDIO -DMODEL_HAS_DYNAMICALLY_LOADED_SFCNS=0
 
 DEFINES = $(DEFINES_BUILD_ARGS) $(DEFINES_CUSTOM) $(DEFINES_OPTS) $(DEFINES_STANDARD)
 
@@ -222,7 +222,7 @@ DEFINES = $(DEFINES_BUILD_ARGS) $(DEFINES_CUSTOM) $(DEFINES_OPTS) $(DEFINES_STAN
 ## SOURCE FILES
 ###########################################################################
 
-SRCS = $(START_DIR)/Asw_DCAC_ert_rtw/Asw_DCAC.c $(START_DIR)/Asw_DCAC_ert_rtw/rtmodel.c
+SRCS = $(START_DIR)/Asw_DCAC_ert_rtw/Asw_DCAC.c
 
 MAIN_SRC = $(MATLAB_ROOT)/rtw/c/src/common/rt_main.c
 
@@ -232,7 +232,7 @@ ALL_SRCS = $(SRCS) $(MAIN_SRC)
 ## OBJECTS
 ###########################################################################
 
-OBJS = Asw_DCAC.o rtmodel.o
+OBJS = Asw_DCAC.o
 
 MAIN_OBJ = rt_main.o
 
@@ -576,10 +576,6 @@ $(PRODUCT) : $(OBJS) $(PREBUILT_OBJS) $(MAIN_OBJ)
 
 
 Asw_DCAC.o : $(START_DIR)/Asw_DCAC_ert_rtw/Asw_DCAC.c
-	$(CC) $(CFLAGS) -o "$@" "$<"
-
-
-rtmodel.o : $(START_DIR)/Asw_DCAC_ert_rtw/rtmodel.c
 	$(CC) $(CFLAGS) -o "$@" "$<"
 
 

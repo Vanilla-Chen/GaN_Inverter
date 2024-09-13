@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'Asw_DCAC'.
  *
- * Model version                  : 1.105
+ * Model version                  : 1.113
  * Simulink Coder version         : 23.2 (R2023b) 01-Aug-2023
- * C/C++ source code generated on : Fri Jul 19 09:56:30 2024
+ * C/C++ source code generated on : Fri Jul 19 16:45:48 2024
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -15,189 +15,235 @@
 
 #include "Asw_DCAC.h"
 #include <math.h>
-#include "rtwtypes.h"
+#include <stdint.h>
+
+/* Exported data definition */
+
+/* Data with Exported storage */
+int32_t Asw_DCAC_BSW_Curr_Induct;      /* '<Root>/BSW_Curr_Induct' */
+int32_t Asw_DCAC_BSW_Curr_Load;        /* '<Root>/BSW_Curr_Load' */
+int32_t Asw_DCAC_BSW_Curr_cap;         /* '<Root>/BSW_Curr_cap' */
+int32_t Asw_DCAC_BSW_Volt_Load;        /* '<Root>/BSW_Volt_Load' */
+float Asw_DCAC_Bottom_High_Frequency;  /* '<Root>/Bottom_High_Frequency' */
+float Asw_DCAC_Low_Frequency;          /* '<Root>/Low_Frequency' */
+float Asw_DCAC_Top_High_Frequency;     /* '<Root>/Top_High_Frequency' */
+
+/* Block signals (default storage) */
+B_Asw_DCAC_T Asw_DCAC_B;
 
 /* Block states (default storage) */
 DW_Asw_DCAC_T Asw_DCAC_DW;
-
-/* External inputs (root inport signals with default storage) */
-ExtU_Asw_DCAC_T Asw_DCAC_U;
-
-/* External outputs (root outports fed by signals with default storage) */
-ExtY_Asw_DCAC_T Asw_DCAC_Y;
 
 /* Real-time model */
 static RT_MODEL_Asw_DCAC_T Asw_DCAC_M_;
 RT_MODEL_Asw_DCAC_T *const Asw_DCAC_M = &Asw_DCAC_M_;
 
-/* Model step function for TID0 */
-void Asw_DCAC_step0(void)              /* Sample time: [1.0E-8s, 0.0s] */
+/* Model step function */
+void Asw_DCAC_step(void)
 {
-  /* (no output/update code required) */
-}
+  double HoldCosine;
+  double lastSin_tmp;
+  float u0;
 
-/* Model step function for TID1 */
-void Asw_DCAC_step1(void)              /* Sample time: [1.0E-5s, 0.0s] */
-{
-  real_T lastSin_tmp;
-  real32_T Integrator;
-  real32_T Integrator_n;
-  real32_T rtb_Gain4;
-  real32_T rtb_Gain7_h;
-  real32_T rtb_IntegralGain;
-  real32_T rtb_IntegralGain_a;
-  real32_T rtb_Saturation;
-
-  /* Gain: '<S3>/Gain7' incorporates:
-   *  Constant: '<S3>/Constant3'
-   *  DataTypeConversion: '<S3>/Data Type Conversion1'
-   *  Gain: '<S3>/Gain6'
+  /* DataTypeConversion: '<S3>/Data Type Conversion1' incorporates:
    *  Inport: '<Root>/BSW_Volt_Load'
-   *  Sum: '<S3>/Add'
    */
-  rtb_Gain7_h = (0.000805664051F * (real32_T)Asw_DCAC_U.BSW_Volt_Load - 1.65F) *
-    32.3333321F;
+  Asw_DCAC_B.DataTypeConversion1 = (float)Asw_DCAC_BSW_Volt_Load;
 
-  /* Sin: '<S5>/Sine Wave3' */
+  /* Gain: '<S3>/Gain6' */
+  Asw_DCAC_B.Gain6 = 0.000805664051F * Asw_DCAC_B.DataTypeConversion1;
+
+  /* Sum: '<S3>/Add' incorporates:
+   *  Constant: '<S3>/Constant3'
+   */
+  Asw_DCAC_B.Add = Asw_DCAC_B.Gain6 - 1.65F;
+
+  /* Gain: '<S3>/Volt_Load' */
+  Asw_DCAC_B.Volt_Load = 32.3333321F * Asw_DCAC_B.Add;
+
+  /* DataTypeConversion: '<S2>/Data Type Conversion1' incorporates:
+   *  Inport: '<Root>/BSW_Curr_Induct'
+   */
+  Asw_DCAC_B.DataTypeConversion1_m = (float)Asw_DCAC_BSW_Curr_Induct;
+
+  /* Gain: '<S2>/Gain6' */
+  Asw_DCAC_B.Gain6_m = 0.000805664051F * Asw_DCAC_B.DataTypeConversion1_m;
+
+  /* Sum: '<S2>/Add' incorporates:
+   *  Constant: '<S2>/Constant3'
+   */
+  Asw_DCAC_B.Add_c = Asw_DCAC_B.Gain6_m - 1.65F;
+
+  /* Gain: '<S2>/OPA_Curr_Induct' */
+  Asw_DCAC_B.OPA_Curr_Induct = 0.01F * Asw_DCAC_B.Add_c;
+
+  /* Gain: '<S2>/Curr_Induct' */
+  Asw_DCAC_B.Curr_Induct = 66.6666641F * Asw_DCAC_B.OPA_Curr_Induct;
+
+  /* DataTypeConversion: '<S1>/Data Type Conversion1' incorporates:
+   *  Inport: '<Root>/BSW_Curr_Load'
+   */
+  Asw_DCAC_B.DataTypeConversion1_n = (float)Asw_DCAC_BSW_Curr_Load;
+
+  /* Gain: '<S1>/Gain6' */
+  Asw_DCAC_B.Gain6_k = 0.000805664051F * Asw_DCAC_B.DataTypeConversion1_n;
+
+  /* Sum: '<S1>/Add' incorporates:
+   *  Constant: '<S1>/Constant3'
+   */
+  Asw_DCAC_B.Add_k = Asw_DCAC_B.Gain6_k - 1.65F;
+
+  /* Gain: '<S1>/OPA_Curr_Load' */
+  Asw_DCAC_B.OPA_Curr_Load = 0.01F * Asw_DCAC_B.Add_k;
+
+  /* Gain: '<S1>/Curr_Load' */
+  Asw_DCAC_B.Curr_Load = 66.6666641F * Asw_DCAC_B.OPA_Curr_Load;
+
+  /* Sin: '<S5>/Sine Wave' */
   if (Asw_DCAC_DW.systemEnable != 0) {
-    lastSin_tmp = 6283.1853071795858 * (((Asw_DCAC_M->Timing.clockTick1+
-      Asw_DCAC_M->Timing.clockTickH1* 4294967296.0)) * 1.0E-5);
+    lastSin_tmp = 6283.1853071795858 * (((Asw_DCAC_M->Timing.clockTick0+
+      Asw_DCAC_M->Timing.clockTickH0* 4294967296.0)) * 1.0E-5);
     Asw_DCAC_DW.lastSin = sin(lastSin_tmp);
     Asw_DCAC_DW.lastCos = cos(lastSin_tmp);
     Asw_DCAC_DW.systemEnable = 0;
   }
 
-  /* Sum: '<S5>/Sum3' incorporates:
-   *  Constant: '<Root>/Constant'
-   *  DataTypeConversion: '<S5>/Data Type Conversion2'
-   *  Product: '<S5>/Product'
-   *  Sin: '<S5>/Sine Wave3'
-   */
-  rtb_Saturation = (real32_T)((Asw_DCAC_DW.lastSin * 0.99802672842827156 +
+  /* Sin: '<S5>/Sine Wave' */
+  Asw_DCAC_B.SineWave = (Asw_DCAC_DW.lastSin * 0.99802672842827156 +
     Asw_DCAC_DW.lastCos * -0.062790519529313374) * 0.99802672842827156 +
     (Asw_DCAC_DW.lastCos * 0.99802672842827156 - Asw_DCAC_DW.lastSin *
-     -0.062790519529313374) * 0.062790519529313374) * 50.0F - rtb_Gain7_h;
+     -0.062790519529313374) * 0.062790519529313374;
+
+  /* DataTypeConversion: '<S5>/Data Type Conversion2' */
+  Asw_DCAC_B.DataTypeConversion2 = (float)Asw_DCAC_B.SineWave;
+
+  /* Product: '<S5>/U_SET' incorporates:
+   *  Constant: '<Root>/Constant'
+   */
+  Asw_DCAC_B.U_SET = Asw_DCAC_B.DataTypeConversion2 * 50.0F;
+
+  /* Sum: '<S5>/U_PID_ERR' */
+  Asw_DCAC_B.U_PID_ERR = Asw_DCAC_B.U_SET - Asw_DCAC_B.Volt_Load;
+
+  /* Gain: '<S92>/Proportional Gain' */
+  Asw_DCAC_B.ProportionalGain = 1.1F * Asw_DCAC_B.U_PID_ERR;
 
   /* Gain: '<S84>/Integral Gain' */
-  rtb_IntegralGain = 0.0001F * rtb_Saturation;
+  Asw_DCAC_B.IntegralGain = 0.0001F * Asw_DCAC_B.U_PID_ERR;
 
   /* DiscreteIntegrator: '<S87>/Integrator' */
-  Integrator = 5.0E-6F * rtb_IntegralGain + Asw_DCAC_DW.Integrator_DSTATE;
+  Asw_DCAC_B.Integrator = 5.0E-6F * Asw_DCAC_B.IntegralGain +
+    Asw_DCAC_DW.Integrator_DSTATE;
 
-  /* Sum: '<S5>/Sum7' incorporates:
-   *  Constant: '<S1>/Constant3'
-   *  Constant: '<S2>/Constant3'
-   *  DataTypeConversion: '<S1>/Data Type Conversion1'
-   *  DataTypeConversion: '<S2>/Data Type Conversion1'
-   *  Gain: '<S1>/Gain6'
-   *  Gain: '<S1>/Gain7'
-   *  Gain: '<S1>/Gain8'
-   *  Gain: '<S2>/Gain6'
-   *  Gain: '<S2>/Gain7'
-   *  Gain: '<S2>/Gain8'
-   *  Inport: '<Root>/BSW_Curr_Induct'
-   *  Inport: '<Root>/BSW_Curr_Load'
-   *  Sum: '<S1>/Add'
-   *  Sum: '<S2>/Add'
-   *  Sum: '<S5>/Sum6'
-   *  Sum: '<S96>/Sum'
-   */
-  rtb_Saturation = ((0.000805664051F * (real32_T)Asw_DCAC_U.BSW_Curr_Load -
-                     1.65F) * 0.01F * 66.6666641F + (rtb_Saturation + Integrator))
-    - (0.000805664051F * (real32_T)Asw_DCAC_U.BSW_Curr_Induct - 1.65F) * 0.01F *
-    66.6666641F;
+  /* Sum: '<S96>/Sum' */
+  Asw_DCAC_B.Sum = Asw_DCAC_B.ProportionalGain + Asw_DCAC_B.Integrator;
+
+  /* Sum: '<S5>/I_L_SET' */
+  Asw_DCAC_B.I_L_SET = Asw_DCAC_B.Curr_Load + Asw_DCAC_B.Sum;
+
+  /* Sum: '<S5>/I_PID_ERR' */
+  Asw_DCAC_B.I_PID_ERR = Asw_DCAC_B.I_L_SET - Asw_DCAC_B.Curr_Induct;
+
+  /* Gain: '<S44>/Proportional Gain' */
+  Asw_DCAC_B.ProportionalGain_e = 1.6F * Asw_DCAC_B.I_PID_ERR;
 
   /* Gain: '<S36>/Integral Gain' */
-  rtb_IntegralGain_a = 0.0001F * rtb_Saturation;
+  Asw_DCAC_B.IntegralGain_f = 0.0001F * Asw_DCAC_B.I_PID_ERR;
 
   /* DiscreteIntegrator: '<S39>/Integrator' */
-  Integrator_n = 5.0E-6F * rtb_IntegralGain_a + Asw_DCAC_DW.Integrator_DSTATE_d;
+  Asw_DCAC_B.Integrator_n = 5.0E-6F * Asw_DCAC_B.IntegralGain_f +
+    Asw_DCAC_DW.Integrator_DSTATE_d;
 
-  /* Gain: '<S5>/Gain2' incorporates:
-   *  Gain: '<S44>/Proportional Gain'
-   *  Sum: '<S48>/Sum'
-   *  Sum: '<S5>/Sum8'
-   */
-  rtb_Gain7_h = ((1.6F * rtb_Saturation + Integrator_n) + rtb_Gain7_h) *
-    0.0166666675F;
+  /* Sum: '<S48>/Sum' */
+  Asw_DCAC_B.Sum_l = Asw_DCAC_B.ProportionalGain_e + Asw_DCAC_B.Integrator_n;
 
-  /* Saturate: '<S5>/Saturation' */
-  if (rtb_Gain7_h > 1.0F) {
-    rtb_Gain7_h = 1.0F;
-  } else if (rtb_Gain7_h < -1.0F) {
-    rtb_Gain7_h = -1.0F;
+  /* Sum: '<S5>/FeedForward' */
+  Asw_DCAC_B.FeedForward = Asw_DCAC_B.Volt_Load + Asw_DCAC_B.Sum_l;
+
+  /* Gain: '<S5>/VBUS_Normalization' */
+  Asw_DCAC_B.VBUS_Normalization = 0.0166666675F * Asw_DCAC_B.FeedForward;
+
+  /* Saturate: '<S5>/Limit' */
+  u0 = Asw_DCAC_B.VBUS_Normalization;
+  if (u0 > 1.0F) {
+    /* Saturate: '<S5>/Limit' */
+    Asw_DCAC_B.Limit = 1.0F;
+  } else if (u0 < -1.0F) {
+    /* Saturate: '<S5>/Limit' */
+    Asw_DCAC_B.Limit = -1.0F;
+  } else {
+    /* Saturate: '<S5>/Limit' */
+    Asw_DCAC_B.Limit = u0;
   }
 
-  /* Gain: '<Root>/Gain4' incorporates:
-   *  Saturate: '<S5>/Saturation'
-   */
-  rtb_Gain4 = 380.0F * rtb_Gain7_h;
+  /* End of Saturate: '<S5>/Limit' */
+
+  /* Gain: '<Root>/Normal2TIM' */
+  Asw_DCAC_B.Normal2TIM = 380.0F * Asw_DCAC_B.Limit;
 
   /* MATLAB Function: '<Root>/Unipolar fast and slow modulation' */
-  rtb_Saturation = 0.0F;
-  rtb_Gain7_h = 0.0F;
-  if (rtb_Gain4 >= 0.0F) {
-    rtb_Saturation = rtb_Gain4;
+  if (Asw_DCAC_B.Normal2TIM >= 0.0F) {
+    Asw_DCAC_B.Top_High_Frequency = Asw_DCAC_B.Normal2TIM;
+    Asw_DCAC_B.Bottom_High_Frequency = 0.0F;
 
     /* Outport: '<Root>/Low_Frequency' */
-    Asw_DCAC_Y.Low_Frequency = 0.0F;
+    Asw_DCAC_Low_Frequency = 0.0F;
   } else {
-    rtb_Gain7_h = -rtb_Gain4;
+    Asw_DCAC_B.Bottom_High_Frequency = -Asw_DCAC_B.Normal2TIM;
+    Asw_DCAC_B.Top_High_Frequency = 0.0F;
 
     /* Outport: '<Root>/Low_Frequency' */
-    Asw_DCAC_Y.Low_Frequency = 1.0F;
+    Asw_DCAC_Low_Frequency = 1.0F;
   }
 
   /* End of MATLAB Function: '<Root>/Unipolar fast and slow modulation' */
 
   /* Outport: '<Root>/Top_High_Frequency' incorporates:
-   *  Gain: '<Root>/Gain2'
+   *  Gain: '<Root>/TIM2Pulse_TopHF'
    */
-  Asw_DCAC_Y.Top_High_Frequency = 0.00263157906F * rtb_Saturation;
+  Asw_DCAC_Top_High_Frequency = 0.00263157906F * Asw_DCAC_B.Top_High_Frequency;
 
   /* Outport: '<Root>/Bottom_High_Frequency' incorporates:
-   *  Gain: '<Root>/Gain3'
+   *  Gain: '<Root>/TIM2Pulse_BotHF'
    */
-  Asw_DCAC_Y.Bottom_High_Frequency = 0.00263157906F * rtb_Gain7_h;
+  Asw_DCAC_Bottom_High_Frequency = 0.00263157906F *
+    Asw_DCAC_B.Bottom_High_Frequency;
 
-  /* Update for Sin: '<S5>/Sine Wave3' */
+  /* Update for Sin: '<S5>/Sine Wave' */
   lastSin_tmp = Asw_DCAC_DW.lastSin;
-  Asw_DCAC_DW.lastSin = Asw_DCAC_DW.lastSin * 0.99802672842827156 +
-    Asw_DCAC_DW.lastCos * 0.062790519529313374;
-  Asw_DCAC_DW.lastCos = Asw_DCAC_DW.lastCos * 0.99802672842827156 - lastSin_tmp *
+  HoldCosine = Asw_DCAC_DW.lastCos;
+  Asw_DCAC_DW.lastSin = lastSin_tmp * 0.99802672842827156 + HoldCosine *
+    0.062790519529313374;
+  Asw_DCAC_DW.lastCos = HoldCosine * 0.99802672842827156 - lastSin_tmp *
     0.062790519529313374;
 
   /* Update for DiscreteIntegrator: '<S87>/Integrator' */
-  Asw_DCAC_DW.Integrator_DSTATE = 5.0E-6F * rtb_IntegralGain + Integrator;
+  Asw_DCAC_DW.Integrator_DSTATE = 5.0E-6F * Asw_DCAC_B.IntegralGain +
+    Asw_DCAC_B.Integrator;
 
   /* Update for DiscreteIntegrator: '<S39>/Integrator' */
-  Asw_DCAC_DW.Integrator_DSTATE_d = 5.0E-6F * rtb_IntegralGain_a + Integrator_n;
+  Asw_DCAC_DW.Integrator_DSTATE_d = 5.0E-6F * Asw_DCAC_B.IntegralGain_f +
+    Asw_DCAC_B.Integrator_n;
 
-  /* Update absolute time */
-  /* The "clockTick1" counts the number of times the code of this task has
+  /* Update absolute time for base rate */
+  /* The "clockTick0" counts the number of times the code of this task has
    * been executed. The resolution of this integer timer is 1.0E-5, which is the step size
-   * of the task. Size of "clockTick1" ensures timer will not overflow during the
+   * of the task. Size of "clockTick0" ensures timer will not overflow during the
    * application lifespan selected.
    * Timer of this task consists of two 32 bit unsigned integers.
-   * The two integers represent the low bits Timing.clockTick1 and the high bits
-   * Timing.clockTickH1. When the low bit overflows to 0, the high bits increment.
+   * The two integers represent the low bits Timing.clockTick0 and the high bits
+   * Timing.clockTickH0. When the low bit overflows to 0, the high bits increment.
    */
-  Asw_DCAC_M->Timing.clockTick1++;
-  if (!Asw_DCAC_M->Timing.clockTick1) {
-    Asw_DCAC_M->Timing.clockTickH1++;
+  Asw_DCAC_M->Timing.clockTick0++;
+  if (!Asw_DCAC_M->Timing.clockTick0) {
+    Asw_DCAC_M->Timing.clockTickH0++;
   }
 }
 
 /* Model initialize function */
 void Asw_DCAC_initialize(void)
 {
-  /* Registration code */
-
-  /* Set task counter limit used by the static main program */
-  (Asw_DCAC_M)->Timing.TaskCounters.cLimit[0] = 1;
-  (Asw_DCAC_M)->Timing.TaskCounters.cLimit[1] = 1000;
-
-  /* Enable for Sin: '<S5>/Sine Wave3' */
+  /* Enable for Sin: '<S5>/Sine Wave' */
   Asw_DCAC_DW.systemEnable = 1;
 }
 

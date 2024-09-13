@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'Asw_DCAC'.
  *
- * Model version                  : 1.105
+ * Model version                  : 1.113
  * Simulink Coder version         : 23.2 (R2023b) 01-Aug-2023
- * C/C++ source code generated on : Fri Jul 19 09:56:30 2024
+ * C/C++ source code generated on : Fri Jul 19 16:45:48 2024
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -17,16 +17,14 @@
 #define RTW_HEADER_Asw_DCAC_h_
 #ifndef Asw_DCAC_COMMON_INCLUDES_
 #define Asw_DCAC_COMMON_INCLUDES_
-#include "rtwtypes.h"
+#include <stdbool.h>
+#include <stdint.h>
+#include "complex_types.h"
 #endif                                 /* Asw_DCAC_COMMON_INCLUDES_ */
 
 #include "Asw_DCAC_types.h"
 
 /* Macros for accessing real-time model data structure */
-#ifndef rtmCounterLimit
-#define rtmCounterLimit(rtm, idx)      ((rtm)->Timing.TaskCounters.cLimit[(idx)])
-#endif
-
 #ifndef rtmGetErrorStatus
 #define rtmGetErrorStatus(rtm)         ((rtm)->errorStatus)
 #endif
@@ -35,41 +33,56 @@
 #define rtmSetErrorStatus(rtm, val)    ((rtm)->errorStatus = (val))
 #endif
 
-#ifndef rtmStepTask
-#define rtmStepTask(rtm, idx)          ((rtm)->Timing.TaskCounters.TID[(idx)] == 0)
-#endif
-
-#ifndef rtmTaskCounter
-#define rtmTaskCounter(rtm, idx)       ((rtm)->Timing.TaskCounters.TID[(idx)])
-#endif
+/* Block signals (default storage) */
+typedef struct {
+  double SineWave;                     /* '<S5>/Sine Wave' */
+  float DataTypeConversion1;           /* '<S3>/Data Type Conversion1' */
+  float Gain6;                         /* '<S3>/Gain6' */
+  float Add;                           /* '<S3>/Add' */
+  float Volt_Load;                     /* '<S3>/Volt_Load' */
+  float DataTypeConversion1_m;         /* '<S2>/Data Type Conversion1' */
+  float Gain6_m;                       /* '<S2>/Gain6' */
+  float Add_c;                         /* '<S2>/Add' */
+  float OPA_Curr_Induct;               /* '<S2>/OPA_Curr_Induct' */
+  float Curr_Induct;                   /* '<S2>/Curr_Induct' */
+  float DataTypeConversion1_n;         /* '<S1>/Data Type Conversion1' */
+  float Gain6_k;                       /* '<S1>/Gain6' */
+  float Add_k;                         /* '<S1>/Add' */
+  float OPA_Curr_Load;                 /* '<S1>/OPA_Curr_Load' */
+  float Curr_Load;                     /* '<S1>/Curr_Load' */
+  float DataTypeConversion2;           /* '<S5>/Data Type Conversion2' */
+  float U_SET;                         /* '<S5>/U_SET' */
+  float U_PID_ERR;                     /* '<S5>/U_PID_ERR' */
+  float ProportionalGain;              /* '<S92>/Proportional Gain' */
+  float IntegralGain;                  /* '<S84>/Integral Gain' */
+  float Integrator;                    /* '<S87>/Integrator' */
+  float Sum;                           /* '<S96>/Sum' */
+  float I_L_SET;                       /* '<S5>/I_L_SET' */
+  float I_PID_ERR;                     /* '<S5>/I_PID_ERR' */
+  float ProportionalGain_e;            /* '<S44>/Proportional Gain' */
+  float IntegralGain_f;                /* '<S36>/Integral Gain' */
+  float Integrator_n;                  /* '<S39>/Integrator' */
+  float Sum_l;                         /* '<S48>/Sum' */
+  float FeedForward;                   /* '<S5>/FeedForward' */
+  float VBUS_Normalization;            /* '<S5>/VBUS_Normalization' */
+  float Limit;                         /* '<S5>/Limit' */
+  float Normal2TIM;                    /* '<Root>/Normal2TIM' */
+  float Top_High_Frequency;     /* '<Root>/Unipolar fast and slow modulation' */
+  float Bottom_High_Frequency;  /* '<Root>/Unipolar fast and slow modulation' */
+} B_Asw_DCAC_T;
 
 /* Block states (default storage) for system '<Root>' */
 typedef struct {
-  real_T lastSin;                      /* '<S5>/Sine Wave3' */
-  real_T lastCos;                      /* '<S5>/Sine Wave3' */
-  real32_T Integrator_DSTATE;          /* '<S87>/Integrator' */
-  real32_T Integrator_DSTATE_d;        /* '<S39>/Integrator' */
-  int32_T systemEnable;                /* '<S5>/Sine Wave3' */
+  double lastSin;                      /* '<S5>/Sine Wave' */
+  double lastCos;                      /* '<S5>/Sine Wave' */
+  float Integrator_DSTATE;             /* '<S87>/Integrator' */
+  float Integrator_DSTATE_d;           /* '<S39>/Integrator' */
+  int32_t systemEnable;                /* '<S5>/Sine Wave' */
 } DW_Asw_DCAC_T;
-
-/* External inputs (root inport signals with default storage) */
-typedef struct {
-  int32_T BSW_Curr_Load;               /* '<Root>/BSW_Curr_Load' */
-  int32_T BSW_Curr_Induct;             /* '<Root>/BSW_Curr_Induct' */
-  int32_T BSW_Volt_Load;               /* '<Root>/BSW_Volt_Load' */
-  real32_T BSW_Curr_cap;               /* '<Root>/BSW_Curr_cap' */
-} ExtU_Asw_DCAC_T;
-
-/* External outputs (root outports fed by signals with default storage) */
-typedef struct {
-  real32_T Top_High_Frequency;         /* '<Root>/Top_High_Frequency' */
-  real32_T Bottom_High_Frequency;      /* '<Root>/Bottom_High_Frequency' */
-  real32_T Low_Frequency;              /* '<Root>/Low_Frequency' */
-} ExtY_Asw_DCAC_T;
 
 /* Real-time Model Data Structure */
 struct tag_RTM_Asw_DCAC_T {
-  const char_T * volatile errorStatus;
+  const char * volatile errorStatus;
 
   /*
    * Timing:
@@ -77,29 +90,32 @@ struct tag_RTM_Asw_DCAC_T {
    * the timing information for the model.
    */
   struct {
-    uint32_T clockTick1;
-    uint32_T clockTickH1;
-    struct {
-      uint16_T TID[2];
-      uint16_T cLimit[2];
-    } TaskCounters;
+    uint32_t clockTick0;
+    uint32_t clockTickH0;
   } Timing;
 };
+
+/* Block signals (default storage) */
+extern B_Asw_DCAC_T Asw_DCAC_B;
 
 /* Block states (default storage) */
 extern DW_Asw_DCAC_T Asw_DCAC_DW;
 
-/* External inputs (root inport signals with default storage) */
-extern ExtU_Asw_DCAC_T Asw_DCAC_U;
-
-/* External outputs (root outports fed by signals with default storage) */
-extern ExtY_Asw_DCAC_T Asw_DCAC_Y;
-
 /* Model entry point functions */
 extern void Asw_DCAC_initialize(void);
-extern void Asw_DCAC_step0(void);
-extern void Asw_DCAC_step1(void);
+extern void Asw_DCAC_step(void);
 extern void Asw_DCAC_terminate(void);
+
+/* Exported data declaration */
+
+/* Data with Exported storage */
+extern int32_t Asw_DCAC_BSW_Curr_Induct;/* '<Root>/BSW_Curr_Induct' */
+extern int32_t Asw_DCAC_BSW_Curr_Load; /* '<Root>/BSW_Curr_Load' */
+extern int32_t Asw_DCAC_BSW_Curr_cap;  /* '<Root>/BSW_Curr_cap' */
+extern int32_t Asw_DCAC_BSW_Volt_Load; /* '<Root>/BSW_Volt_Load' */
+extern float Asw_DCAC_Bottom_High_Frequency;/* '<Root>/Bottom_High_Frequency' */
+extern float Asw_DCAC_Low_Frequency;   /* '<Root>/Low_Frequency' */
+extern float Asw_DCAC_Top_High_Frequency;/* '<Root>/Top_High_Frequency' */
 
 /* Real-time Model object */
 extern RT_MODEL_Asw_DCAC_T *const Asw_DCAC_M;
@@ -109,7 +125,6 @@ extern RT_MODEL_Asw_DCAC_T *const Asw_DCAC_M;
  *
  * Block '<Root>/Data Type Conversion' : Unused code path elimination
  * Block '<Root>/Sine Wave5' : Unused code path elimination
- * Block '<S92>/Proportional Gain' : Eliminated nontunable gain of 1
  */
 
 /*-
