@@ -2,7 +2,7 @@
 ## Makefile generated for component 'Asw_DCAC'. 
 ## 
 ## Makefile     : Asw_DCAC.mk
-## Generated on : Fri Jul 19 13:35:52 2024
+## Generated on : Mon Sep 30 13:38:01 2024
 ## Final product: $(RELATIVE_PATH_TO_ANCHOR)/Asw_DCAC.elf
 ## Product type : executable
 ## 
@@ -222,7 +222,7 @@ DEFINES = $(DEFINES_BUILD_ARGS) $(DEFINES_CUSTOM) $(DEFINES_OPTS) $(DEFINES_STAN
 ## SOURCE FILES
 ###########################################################################
 
-SRCS = $(START_DIR)/Asw_DCAC_ert_rtw/Asw_DCAC.c
+SRCS = $(START_DIR)/Asw_DCAC_ert_rtw/Asw_DCAC.c $(START_DIR)/Asw_DCAC_ert_rtw/rtGetInf.c $(START_DIR)/Asw_DCAC_ert_rtw/rtGetNaN.c $(START_DIR)/Asw_DCAC_ert_rtw/rt_nonfinite.c
 
 MAIN_SRC = $(MATLAB_ROOT)/rtw/c/src/common/rt_main.c
 
@@ -232,7 +232,7 @@ ALL_SRCS = $(SRCS) $(MAIN_SRC)
 ## OBJECTS
 ###########################################################################
 
-OBJS = Asw_DCAC.o
+OBJS = Asw_DCAC.o rtGetInf.o rtGetNaN.o rt_nonfinite.o
 
 MAIN_OBJ = rt_main.o
 
@@ -576,6 +576,18 @@ $(PRODUCT) : $(OBJS) $(PREBUILT_OBJS) $(MAIN_OBJ)
 
 
 Asw_DCAC.o : $(START_DIR)/Asw_DCAC_ert_rtw/Asw_DCAC.c
+	$(CC) $(CFLAGS) -o "$@" "$<"
+
+
+rtGetInf.o : $(START_DIR)/Asw_DCAC_ert_rtw/rtGetInf.c
+	$(CC) $(CFLAGS) -o "$@" "$<"
+
+
+rtGetNaN.o : $(START_DIR)/Asw_DCAC_ert_rtw/rtGetNaN.c
+	$(CC) $(CFLAGS) -o "$@" "$<"
+
+
+rt_nonfinite.o : $(START_DIR)/Asw_DCAC_ert_rtw/rt_nonfinite.c
 	$(CC) $(CFLAGS) -o "$@" "$<"
 
 

@@ -1,2 +1,5 @@
 Asw_DCAC.o
+rtGetInf.o
+rtGetNaN.o
+rt_nonfinite.o
 rt_main.o
